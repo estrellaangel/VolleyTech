@@ -5,6 +5,13 @@ export type Player = {
   position: "Setter" | "Outside" | "Middle" | "Opposite" | "Libero" | "DS";
   avatarUrl?: string;
   emails?: string[];
+  attackStats?: string[];
+  serveStats?: string[];
+  serveRecieveStats?: string[];
+  setStats?: string[];
+  digStats?: string[];
+  blockStats?: string[];
+  miscStats?: string[];
 };
 
 export const PLAYERS: Player[] = [
