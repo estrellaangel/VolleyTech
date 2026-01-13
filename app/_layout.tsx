@@ -1,13 +1,15 @@
-import "react-native-reanimated";
 import { Stack } from "expo-router";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { TeamEventsProvider } from "../data/store/teamEventsStore";
 
 export default function RootLayout() {
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-    />
+    <SafeAreaProvider>
+      <TeamEventsProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: true }} />
+        </Stack>
+      </TeamEventsProvider>
+    </SafeAreaProvider>
   );
 }

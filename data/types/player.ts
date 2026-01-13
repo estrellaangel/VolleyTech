@@ -9,6 +9,10 @@ export type PlayerPosition =
 
 export type PlayerProfile = {
   id: string;                 // internal stable id (use for linking stats later)
+
+  teamId: string;         // ✅ add this
+  userId?: string;        // ✅ if this player has a login account
+
   firstName: string;
   lastName: string;
 
@@ -16,7 +20,7 @@ export type PlayerProfile = {
   jerseyNumber: number;
   captain: boolean;
 
-  email: string;
+  email: string; // required to log in 
 
   // optional but very useful
   phone?: string;

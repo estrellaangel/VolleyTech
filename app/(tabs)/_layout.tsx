@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function TabsLayout() {
   return (
-    <Tabs screenOptions={{ headerShown: true }}>
+    <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen
         name="dashboard"
         options={{
@@ -14,7 +14,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="calendar"
+        name="calendar/index"
         options={{
           title: "Calendar",
           tabBarIcon: ({ color, size }) => (
@@ -49,7 +49,10 @@ export default function TabsLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen name="calendar/add-event" options={{ href: null }} />
+      <Tabs.Screen name="calendar/edit/[eventId]" options={{ href: null }} />
+      <Tabs.Screen name="calendar/[eventId]" options={{ href: null }} />
     </Tabs>
-    
   );
 }

@@ -1,4 +1,4 @@
-const mockBalltimeColumns = [
+export const mockBalltimeColumns = [
   "Player",
   "K",
   "E",

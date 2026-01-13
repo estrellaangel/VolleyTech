@@ -5,6 +5,8 @@ const now = new Date().toISOString();
 export const mockPlayers: PlayerProfile[] = [
   {
     id: "p_001",
+    teamId: "team_001",
+    userId: "user_player_001", // kid can log in
     firstName: "Caroline",
     lastName: "Toberman",
     position: "Outside Hitter",
@@ -20,6 +22,8 @@ export const mockPlayers: PlayerProfile[] = [
   },
   {
     id: "p_002",
+    teamId: "team_001",
+    userId: "user_player_002", // kid can log in
     firstName: "Madison",
     lastName: "Maxwell",
     position: "Setter",
@@ -35,6 +39,8 @@ export const mockPlayers: PlayerProfile[] = [
   },
   {
     id: "p_003",
+    teamId: "team_001",
+    userId: "user_player_003", // kid can log in
     firstName: "Milani",
     lastName: "Lee",
     position: "Libero",
@@ -50,6 +56,8 @@ export const mockPlayers: PlayerProfile[] = [
   },
   {
     id: "p_004",
+    teamId: "team_001",
+    userId: "user_player_004", // kid can log in
     firstName: "Laurel",
     lastName: "Barsocchini",
     position: "Middle Blocker",
@@ -65,6 +73,8 @@ export const mockPlayers: PlayerProfile[] = [
   },
   {
     id: "p_005",
+    teamId: "team_001",
+    userId: "user_player_005", // kid can log in
     firstName: "Victoria",
     lastName: "Davis",
     position: "Opposite",
@@ -80,6 +90,8 @@ export const mockPlayers: PlayerProfile[] = [
   },
   {
     id: "p_006",
+    teamId: "team_001",
+    userId: "user_player_006", // kid can log in
     firstName: "Bridget",
     lastName: "Conley",
     position: "Outside Hitter",
@@ -95,6 +107,8 @@ export const mockPlayers: PlayerProfile[] = [
   },
   {
     id: "p_007",
+    teamId: "team_001",
+    userId: "user_player_007", // kid can log in
     firstName: "Hannah",
     lastName: "Shaffer",
     position: "Defensive Specialist",
@@ -110,6 +124,8 @@ export const mockPlayers: PlayerProfile[] = [
   },
   {
     id: "p_008",
+    teamId: "team_001",
+    userId: "user_player_008", // kid can log in
     firstName: "Jaydin",
     lastName: "Watts",
     position: "Middle Blocker",
