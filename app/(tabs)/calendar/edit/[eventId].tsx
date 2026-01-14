@@ -1,5 +1,13 @@
-import React, { useMemo, useState } from "react";
-import { View, Text, Pressable, TextInput, ScrollView, Platform } from "react-native";
+import React, { useMemo, useRef, useState } from "react";
+import {
+  View,
+  Text,
+  Pressable,
+  TextInput,
+  ScrollView,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -24,6 +32,9 @@ function toIsoWithSameTZ(d: Date) {
   return d.toISOString();
 }
 
+
+const KEYBOARD_OFFSET = Platform.OS === "ios" ? 90 : 0;
+
 type ActivePicker = "startDate" | "startTime" | "endDate" | "endTime" | null;
 
 export default function EditEventScreen() {
@@ -39,20 +50,45 @@ export default function EditEventScreen() {
     [events, eventId]
   );
 
+  const scrollRef = useRef<ScrollView>(null);
+  const notesYRef = useRef(0);
+
+  function scrollNotesIntoView() {
+   // slight delay so keyboard has time to appear
+   setTimeout(() => {
+    scrollRef.current?.scrollTo({
+    y: Math.max(0, notesYRef.current - 16),
+    animated: true,
+    });
+  }, 50);
+  }
+
+
+
   const IOS_INLINE_NUDGE = 1; // tweak: 6–14 usually (you can adjust)
 
   if (!eventId || !event) {
     return (
-      <Screen>
-        <View style={{ paddingTop: 12, gap: 10 }}>
-          <Text style={{ fontSize: 18, fontWeight: "800" }}>Event not found.</Text>
-          <Pressable onPress={() => router.back()}>
-            <Text style={{ color: "#2563EB", fontWeight: "800" }}>← Back</Text>
-          </Pressable>
-        </View>
-      </Screen>
+        <Screen>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={KEYBOARD_OFFSET}
+        >
+            <ScrollView
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={{ paddingTop: 12, gap: 10, paddingBottom: 24 }}
+            >
+            <Text style={{ fontSize: 18, fontWeight: "800" }}>Event not found.</Text>
+            <Pressable onPress={() => router.back()}>
+                <Text style={{ color: "#2563EB", fontWeight: "800" }}>← Back</Text>
+            </Pressable>
+            </ScrollView>
+        </KeyboardAvoidingView>
+        </Screen>
     );
-  }
+    }
+
 
   // form state
   const [title, setTitle] = useState(event.title);
@@ -180,7 +216,15 @@ export default function EditEventScreen() {
 
   return (
     <Screen>
-      <ScrollView contentContainerStyle={{ paddingTop: 8, gap: 14, paddingBottom: 24 }}>
+      <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={KEYBOARD_OFFSET}>
+      <ScrollView 
+      ref={scrollRef}
+      keyboardShouldPersistTaps="handled"
+      contentContainerStyle={{ paddingTop: 8, gap: 14, paddingBottom: 24 }}
+      >
         {/* Top bar */}
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Pressable onPress={onCancel} style={{ paddingVertical: 6, paddingRight: 10 }}>
@@ -469,27 +513,36 @@ export default function EditEventScreen() {
         </View>
 
         {/* Notes (typing at top ✅) */}
-        <View style={{ gap: 6 }}>
-          <Text style={{ fontWeight: "900", opacity: 0.85 }}>Coach Notes</Text>
-          <TextInput
+        <View
+        style={{ gap: 6 }}
+        onLayout={(e) => {
+            notesYRef.current = e.nativeEvent.layout.y;
+        }}
+        >
+        <Text style={{ fontWeight: "900", opacity: 0.85 }}>Coach Notes</Text>
+
+        <TextInput
             value={description}
             onChangeText={setDescription}
             placeholder="Add notes..."
             multiline
             scrollEnabled
             textAlignVertical="top"
+            onFocus={scrollNotesIntoView}
             style={{
-              backgroundColor: "white",
-              borderWidth: 1,
-              borderColor: "#E5E7EB",
-              borderRadius: 12,
-              padding: 12,
-              minHeight: 140,
-              textAlignVertical: "top",
+            backgroundColor: "white",
+            borderWidth: 1,
+            borderColor: "#E5E7EB",
+            borderRadius: 12,
+            padding: 12,
+            minHeight: 160,
             }}
-          />
+        />
         </View>
+
+        
       </ScrollView>
+      </KeyboardAvoidingView>
     </Screen>
   );
 }
