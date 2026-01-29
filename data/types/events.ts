@@ -63,7 +63,7 @@ export type TeamEvent = {
   createdBy: string;
   updatedBy?: string;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 
   visibility: { scope: "team"; teamId: string };
 };
